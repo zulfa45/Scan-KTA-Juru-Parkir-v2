@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#1565c0">
+<title>Scanner KTA Petugas Parkir</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Scanner KTA</h1>
+    <p>OCR Nama & Blok</p>
+  </div>
+  <button id="resetBtn">🗑️</button>
+</header>
+
+<main>
+  <section class="stats">
+    <div><span>Total</span><b id="total">0</b></div>
+    <div><span>Hari Ini</span><b id="today">0</b></div>
+    <div><span>Blok</span><b id="blocks">0</b></div>
+  </section>
+
+  <section class="card">
+    <h2>📷 Kamera</h2>
+    <div class="camera-box">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="guide">
+        <div class="guide-name"></div>
+        <div class="guide-block"></div>
+      </div>
+      <div id="cameraMessage">Tekan "Mulai Kamera"</div>
+    </div>
+
+    <div class="buttons">
+      <button id="startCamera" class="primary">📷 Mulai Kamera</button>
+      <button id="captureBtn" class="primary" disabled>🔍 Scan KTA</button>
+      <button id="stopCamera" class="secondary" disabled>⏹ Stop</button>
+    </div>
+
+    <p class="tip">
+      Posisikan KTA tegak, seluruh kartu terlihat, cukup terang, dan jangan digerakkan saat menekan Scan KTA.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Hasil Scan</h2>
+    <div class="result">
+      <label>Nama
+        <input id="name" placeholder="Nama hasil OCR">
+      </label>
+      <label>Blok
+        <input id="block" placeholder="Contoh: IV">
+      </label>
+    </div>
+    <button id="saveBtn" class="primary full" disabled>✓ Simpan Data</button>
+    <p id="ocrStatus" class="status"></p>
+  </section>
+
+  <section class="card">
+    <div class="title-row">
+      <h2>Data Pendataan</h2>
+      <button id="exportBtn" class="small">📄 Export TXT</button>
+    </div>
+    <input id="search" class="search" placeholder="🔎 Cari nama atau blok">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No</th><th>Nama</th><th>Blok</th><th>Waktu</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty" class="empty">Belum ada data.</div>
+    </div>
+  </section>
+</main>
+
+<canvas id="canvas" hidden></canvas>
+<canvas id="nameCanvas" hidden></canvas>
+<canvas id="blockCanvas" hidden></canvas>
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
