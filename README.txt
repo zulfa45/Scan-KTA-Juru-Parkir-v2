@@ -1,24 +1,26 @@
-SISTEM SCAN KTA OCR KHUSUS
+VERSI OCR KTA - AKURASI LEBIH TINGGI
 
-Versi ini dibuat khusus mengikuti layout KTA contoh:
-- Nama berada di bagian bawah tengah kartu.
-- Blok berada di kiri bawah kartu.
-- OCR dipisahkan menjadi dua crop: NAMA dan BLOK.
-- Blok dinormalisasi agar variasi OCR seperti I/1/l dan V/Y dapat diperbaiki.
-- Data disimpan di localStorage.
-- Export ke TXT.
+Perbaikan:
+1. Scan 3 frame, bukan satu frame.
+2. Setiap frame diproses dengan 3 variasi preprocessing.
+3. Upscale 4x sebelum OCR.
+4. Grayscale, contrast, brightness, dan sharpening.
+5. OCR nama dan blok dipisahkan.
+6. OCR blok memakai whitelist huruf/angka yang relevan.
+7. Hasil nama dipilih berdasarkan konsistensi antar frame.
+8. Hasil blok dipilih berdasarkan voting mayoritas.
+9. Ada kalibrasi posisi crop Nama Y dan Blok Y.
+10. Data hanya disimpan setelah hasil lolos validasi.
 
-PENGGUNAAN:
-1. Buka index.html melalui HTTPS/preview yang memberi secure context.
-2. Izinkan kamera.
-3. Gunakan kamera belakang.
-4. Masukkan seluruh KTA dalam kotak panduan.
-5. Pastikan nama dan blok berada tepat pada area kotak hijau/kuning.
-6. Tekan Scan KTA.
-7. Periksa hasil, lalu tekan Simpan Data.
-8. Export TXT dari bagian Data Pendataan.
+PENTING:
+- Tidak ada algoritma yang bisa mengembalikan detail yang benar-benar hilang karena blur berat.
+- Untuk blur ringan/sedang, multi-frame + preprocessing membantu cukup banyak.
+- KTA harus tetap terlihat hampir penuh, fokus, dan pencahayaan cukup.
+- Gunakan kamera belakang.
+- Untuk kamera browser gunakan HTTPS atau localhost.
+- Tesseract.js memerlukan internet saat pertama memuat engine/bahasa.
+- Jika desain KTA berubah, posisi crop perlu dikalibrasi.
 
-CATATAN:
-- Tesseract.js membutuhkan internet untuk memuat library/data bahasa saat pertama digunakan.
-- Karena layout KTA dipakai sebagai patokan, jika desain KTA berubah, posisi crop di app.js perlu disesuaikan.
-- OCR tetap dapat salah jika foto buram, terlalu gelap, kartu miring, atau teks tertutup.
+FORMAT TARGET KTA CONTOH:
+Nama: WAHYU SUDJATMIKO
+Blok: IV
