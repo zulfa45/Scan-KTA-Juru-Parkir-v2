@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner KTA Juru Parkir</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Tesseract.js untuk OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistem Pendataan KTA</h1>
+            <p>Juru Parkir - Kota Magelang</p>
+        </header>
+
+        <div class="scanner-container">
+            <!-- Video feed dari kamera -->
+            <video id="video" autoplay playsinline></video>
+            <!-- Canvas tersembunyi untuk mengambil frame foto -->
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div id="overlay" class="overlay"></div>
+        </div>
+
+        <div class="controls">
+            <button id="startBtn">Mulai Kamera</button>
+            <button id="scanBtn" disabled>Ambil & Pindai</button>
+        </div>
+
+        <div class="result-box">
+            <h2>Hasil Pemindaian</h2>
+            <p id="status">Status: Menunggu kamera...</p>
+            <div class="data-field">
+                <strong>Nama:</strong> <span id="namaResult">-</span>
+            </div>
+            <div class="data-field">
+                <strong>Blok:</strong> <span id="blokResult">-</span>
+            </div>
+            <button id="exportBtn" disabled>Ekspor ke TXT</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
