@@ -1,46 +1,78 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scanner KTA Juru Parkir</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Tesseract.js untuk OCR -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>Scan KTA Petugas Parkir</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Sistem Pendataan KTA</h1>
-            <p>Juru Parkir - Kota Magelang</p>
-        </header>
+<header>
+  <div class="brand"><div class="logo">KTA</div><div><h1>Scan KTA</h1><p>OCR Nama & Blok</p></div></div>
+  <button id="clearBtn" class="top-btn">Hapus</button>
+</header>
 
-        <div class="scanner-container">
-            <!-- Video feed dari kamera -->
-            <video id="video" autoplay playsinline></video>
-            <!-- Canvas tersembunyi untuk mengambil frame foto -->
-            <canvas id="canvas" style="display: none;"></canvas>
-            <div id="overlay" class="overlay"></div>
-        </div>
+<main>
+  <section class="stats">
+    <div><span>Total</span><b id="total">0</b></div>
+    <div><span>Hari ini</span><b id="today">0</b></div>
+    <div><span>Blok</span><b id="blocks">0</b></div>
+  </section>
 
-        <div class="controls">
-            <button id="startBtn">Mulai Kamera</button>
-            <button id="scanBtn" disabled>Ambil & Pindai</button>
-        </div>
-
-        <div class="result-box">
-            <h2>Hasil Pemindaian</h2>
-            <p id="status">Status: Menunggu kamera...</p>
-            <div class="data-field">
-                <strong>Nama:</strong> <span id="namaResult">-</span>
-            </div>
-            <div class="data-field">
-                <strong>Blok:</strong> <span id="blokResult">-</span>
-            </div>
-            <button id="exportBtn" disabled>Ekspor ke TXT</button>
-        </div>
+  <section class="card">
+    <div class="title-row"><h2>📷 Kamera KTA</h2><span id="status" class="status">Kamera mati</span></div>
+    <div class="camera">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="guide"><div></div><small>Posisikan seluruh KTA di dalam area</small></div>
+      <canvas id="canvas"></canvas>
     </div>
+    <div class="actions">
+      <button id="cameraBtn" class="primary">Buka Kamera</button>
+      <button id="scanBtn" class="secondary" disabled>🔍 Scan Manual</button>
+    </div>
+    <div id="progress" class="progress hidden"><div id="bar"></div></div>
+    <p id="message" class="hint">Arahkan kamera ke KTA seperti contoh. Sistem akan membaca tulisan, mengambil nama dan blok, lalu menyimpannya otomatis.</p>
+  </section>
 
-    <script src="script.js"></script>
+  <section class="card result hidden" id="resultCard">
+    <div class="title-row"><h2>Hasil Scan</h2><span class="ok">✓ Terdeteksi</span></div>
+    <div class="result-grid">
+      <div><small>Nama</small><strong id="resultName">-</strong></div>
+      <div><small>Blok</small><strong id="resultBlock">-</strong></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="title-row"><h2>📋 Data Tercatat</h2><button id="exportBtn" class="small-btn">Export TXT</button></div>
+    <input id="search" class="search" placeholder="Cari nama atau blok...">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No</th><th>Nama</th><th>Blok</th><th>Waktu</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div id="empty" class="empty">Belum ada data.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="title-row"><h2>📊 Rekap Blok</h2></div>
+    <div id="recap" class="recap"></div>
+  </section>
+
+  <section class="card info">
+    <h2>Catatan penggunaan</h2>
+    <ol>
+      <li>Gunakan Chrome di HP dan izinkan akses kamera.</li>
+      <li>Pastikan seluruh KTA terlihat, cukup terang, dan tidak terlalu miring.</li>
+      <li>Setelah kamera dibuka, sistem otomatis mencoba scan setiap beberapa detik. Tombol <b>Scan Manual</b> bisa digunakan jika ingin memaksa scan.</li>
+      <li>Data tersimpan di HP/browser dan bisa diekspor ke TXT.</li>
+    </ol>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
 </body>
 </html>
